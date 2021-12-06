@@ -3,7 +3,7 @@ module github.com/getoutreach/ci
 go 1.17
 
 require (
-	github.com/getoutreach/gobox v1.29.0
+	github.com/getoutreach/gobox v1.29.1
 	github.com/getoutreach/httpx v1.8.1
 	github.com/sirupsen/logrus v1.8.1
 	github.com/urfave/cli/v2 v2.3.0
