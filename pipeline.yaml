@@ -1,0 +1,16 @@
+name: ci
+repo: getoutreach/ci
+pipelineTemplate: custom_segments
+deploymentSegments:
+  - name: "white"
+  - name: staging1a
+    groupType: MEMBER
+    parentSegmentName: "white"
+notificationMethods:
+  - type: slack-channel
+    slackChannel: "dev-tooling-support"
+    notifications:
+      - Promote
+      - WorkflowPassed
+      - WorkflowFailed
+workflows:

@@ -1,0 +1,9 @@
+name: ci
+reportingTeam: fnd-dtss
+description: Collection of utilities for use in CI @ Outreach
+slack: dev-tooling-support
+commands:
+  - ghaccesstoken
+lintroller: platinum
+releaseType: ""
+library: true

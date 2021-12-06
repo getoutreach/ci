@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://www.opslevel.com/opslevel.schema.yml
+version: 1
+service:
+  name: ci
+  ###Block(serviceMetadata)
+  # Available options are listed here: https://app.opslevel.com/account
+  # To find the alias for a given lifecycle: https://www.opslevel.com/docs/api/opslevel-yml/#finding-the-alias-for-a-lifecycle
+  # To find the alias for a given tier: https://www.opslevel.com/docs/api/opslevel-yml/#finding-the-alias-for-a-tier
+  lifecycle: in_development
+  tier: tier_2
+  tools:
+  # Uncomment these as needed
+  # More examples: https://opslevel.com/docs/api/opslevel-yml/#example-service-opslevelyml
+  # - name: Datadog Dashboard
+  #   category: metrics
+  #   url: link-to-datadog
+  #   environment:
+  # - name: Runbooks
+  #   category: runbooks
+  #   url: link-to-confluence
+  # - name: Pagerduty Link
+  #   category: incidents
+  #   url: link-to-pagerduty-service
+  #   environment: Production
+  # - name: Disaster Recovery Plan
+  #   category: runbooks
+  #   url: url-to-confluence
+  ###EndBlock(serviceMetadata)
+  product: Outreach
+  owner: fnd_dtss
+  language: Golang
+  framework: bootstrap
+  description: Collection of utilities for use in CI @ Outreach
+  aliases:
+    - ci
+    - k8s:ci
+    - k8s:ci-ci--staging1a
+  tags:
+    - key: repo
+      value: ci
+    - key: reporting_team
+      value: fnd-dtss
+    - key: app
+      value: ci
+    - key: name
+      value: ci
+    - key: simple
+      value: "true"
+  repositories:
+    - name: getoutreach/ci
+      path: "/"
+      provider: github
+  dependencies: []
