@@ -20,7 +20,7 @@ import (
 )
 
 // init seeds the random generator
-func init() { //nolint // Why: seeding random
+func init() { //nolint:gochecknoinits // Why: seeding random
 	rand.Seed(time.Now().UnixNano())
 }
 
