@@ -51,7 +51,7 @@ func main() {
 	}
 	app.Commands = []*cli.Command{
 		///Block(commands)
-		NewTokenCmd(),
+		NewTokenCmd(log),
 		///EndBlock(commands)
 	}
 

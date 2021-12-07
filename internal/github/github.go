@@ -8,15 +8,21 @@ package github
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/bradleyfalzon/ghinstallation"
 	"github.com/getoutreach/gobox/pkg/cfg"
 	gc "github.com/google/go-github/v34/github"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
+
+// init seeds the random generator
+func init() { //nolint // Why: seeding random
+	rand.Seed(time.Now().UnixNano())
+}
 
 // Credential is a type of credential to use when talking to Github
 type Credential struct {
@@ -91,9 +97,6 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 		return "", fmt.Errorf("token close to be, or is, rate limited")
 	}
 
-	resetAtDur := time.Until(rl.Core.Reset.Time)
-	fmt.Fprintf(os.Stderr, "Credential Status for %s: %d calls remaining for %s\n", c.Name, rl.Core.Remaining, resetAtDur)
-
 	// Now use the token against a known working endpoint because /rate_limits
 	// doesn't always work for Github Apps
 	_, _, err = cli.Organizations.Get(ctx, "getoutreach")
@@ -106,17 +109,21 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 
 // GetToken returns a Github Token that is not rate-limited from
 // a pool of Github Apps and Access Tokens.
-func GetToken(ctx context.Context, creds []*Credential) (cfg.SecretData, error) {
-	errs := make([]error, 0)
-	for _, c := range creds {
+func GetToken(ctx context.Context, creds []*Credential, logger logrus.FieldLogger) (cfg.SecretData, error) {
+	indexes := rand.Perm(len(creds))
+	for i := range indexes {
+		c := creds[i]
+		log := logger.WithField("name", c.Name)
+
 		t, err := c.GetToken(ctx)
 		if err != nil {
-			errs = append(errs, err)
+			log.WithError(err).Warn("failed to use credential")
 			continue
 		}
 
+		log.Info("selected token")
 		return t, err
 	}
 
-	return "", fmt.Errorf("failed to find non-ratelimited token: %v", errs)
+	return "", fmt.Errorf("failed to find non-ratelimited token")
 }

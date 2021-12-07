@@ -18,6 +18,7 @@ import (
 	"github.com/getoutreach/ci/internal/github"
 	"github.com/getoutreach/gobox/pkg/cfg"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 )
 
@@ -34,7 +35,7 @@ func filterPrefix(prefix string, strs []string) []string {
 }
 
 // NewTokenCmd creates a new "ghaccesstoken token" command
-func NewTokenCmd() *cli.Command {
+func NewTokenCmd(log logrus.FieldLogger) *cli.Command {
 	return &cli.Command{
 		Name:        "token",
 		Description: "Returns a valid, non-ratelimited token for use with the Github API",
@@ -86,7 +87,7 @@ func NewTokenCmd() *cli.Command {
 					}
 				}
 
-				fmt.Fprintf(os.Stderr, "Using credentials from environment variable: %s\n", env)
+				log.Printf("Using credentials from environment variable: %s", env)
 
 				// Create the cred. If appID is it's zero value then we assume that this is a PAT.
 				cred := &github.Credential{
@@ -103,7 +104,7 @@ func NewTokenCmd() *cli.Command {
 				creds = append(creds, cred)
 			}
 
-			t, err := github.GetToken(context.Background(), creds)
+			t, err := github.GetToken(context.Background(), creds, log)
 			if err != nil {
 				return err
 			}
