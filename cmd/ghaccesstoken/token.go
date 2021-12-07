@@ -21,6 +21,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// filterPrefix iterates over a set of strings and returns only
+// those with the provided prefix
 func filterPrefix(prefix string, strs []string) []string {
 	filtered := make([]string, 0)
 	for _, s := range strs {
@@ -31,6 +33,7 @@ func filterPrefix(prefix string, strs []string) []string {
 	return filtered
 }
 
+// NewTokenCmd creates a new "ghaccesstoken token" command
 func NewTokenCmd() *cli.Command {
 	return &cli.Command{
 		Name:        "token",

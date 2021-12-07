@@ -1,3 +1,7 @@
+// Copyright 2021 Outreach Corporation. All Rights Reserved.
+
+// Description: Implements a static token transport for use in
+// rate limit validation
 package github
 
 import (
@@ -6,6 +10,8 @@ import (
 	"github.com/getoutreach/gobox/pkg/cfg"
 )
 
+// staticTokenTransport is a small http.Roundtripper that injects
+// a static token into all HTTP requests made with it.
 type staticTokenTransport struct {
 	token cfg.SecretData
 }

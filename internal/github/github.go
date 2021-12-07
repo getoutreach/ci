@@ -1,3 +1,8 @@
+// Copyright 2021 Outreach Corporation. All Rights Reserved.
+
+// Description: Implements the core Github credential pooling logic
+
+// Package github contains all logic for implementing Github credential pooling
 package github
 
 import (
@@ -36,6 +41,8 @@ type Credential struct {
 	AccessToken cfg.SecretData
 }
 
+// getToken returns a valid token from a Credential or an error if one
+// can't be obtained
 func (c *Credential) getToken(ctx context.Context) (cfg.SecretData, error) {
 	if c.AppID == nil {
 		return c.AccessToken, nil
@@ -59,6 +66,8 @@ func (c *Credential) getToken(ctx context.Context) (cfg.SecretData, error) {
 	return cfg.SecretData(*token.Token), nil
 }
 
+// GetToken returns a valid token from a credential and ensures it's not rate-limited
+// if it is, or one cannot be obtained, then instead an error is returned.
 func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 	t, err := c.getToken(ctx)
 	if err != nil {
