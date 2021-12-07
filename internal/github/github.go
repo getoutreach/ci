@@ -111,7 +111,7 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 // a pool of Github Apps and Access Tokens.
 func GetToken(ctx context.Context, creds []*Credential, logger logrus.FieldLogger) (cfg.SecretData, error) {
 	indexes := rand.Perm(len(creds))
-	for i := range indexes {
+	for _, i := range indexes {
 		c := creds[i]
 		log := logger.WithField("name", c.Name)
 
