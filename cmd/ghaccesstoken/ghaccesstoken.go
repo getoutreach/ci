@@ -49,6 +49,7 @@ func main() {
 	}
 	app.Commands = []*cli.Command{
 		///Block(commands)
+		NewTokenCmd(),
 		///EndBlock(commands)
 	}
 
