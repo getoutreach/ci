@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/bradleyfalzon/ghinstallation v1.1.1
-	github.com/getoutreach/gobox v1.29.0
+	github.com/getoutreach/gobox v1.29.1
 	github.com/google/go-github/v34 v34.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.8.1
