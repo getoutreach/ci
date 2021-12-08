@@ -9,6 +9,7 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"os"
 	"sort"
@@ -93,12 +94,20 @@ func NewTokenCmd(log logrus.FieldLogger) *cli.Command {
 				cred := &github.Credential{
 					Name: env,
 				}
+
+				tokenOrPem := spl[2]
+				b, err := base64.StdEncoding.DecodeString(tokenOrPem)
+				if err != nil {
+					return errors.Wrap(err, "failed to decode access_token/pem as base64")
+				}
+				tokenOrPem = string(b)
+
 				if appID != 0 {
 					cred.AppID = &appID
 					cred.InstallID = &installID
-					cred.PEM = cfg.SecretData(spl[2])
+					cred.PEM = cfg.SecretData(tokenOrPem)
 				} else {
-					cred.AccessToken = cfg.SecretData(spl[2])
+					cred.AccessToken = cfg.SecretData(tokenOrPem)
 				}
 
 				creds = append(creds, cred)

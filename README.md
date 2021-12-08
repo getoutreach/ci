@@ -66,7 +66,7 @@ Once this has been done, download the private key from the bottom of the app pag
 Run the following command in your terminal to generate the env var string:
 
 ```bash
-echo "YOUR_APP_ID,YOUR_INSTALL_ID,$(cat ~/Downloads/your-key.pem)" | pbcopy
+echo "YOUR_APP_ID,YOUR_INSTALL_ID,$(base64 < "$HOME/Downloads/your-key.pem")" | pbcopy
 ```
 
 **Note**: This is now in your clipboard on macOS.
