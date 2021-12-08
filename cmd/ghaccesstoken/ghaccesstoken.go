@@ -23,6 +23,8 @@ import (
 var HoneycombTracingKey = "NOTSET" //nolint:gochecknoglobals // Why: We can't compile in things as a const.
 
 ///Block(honeycombDataset)
+
+// HoneycombDataset is the HoneycombDataset to use when tracing
 const HoneycombDataset = ""
 
 ///EndBlock(honeycombDataset)
@@ -49,6 +51,7 @@ func main() {
 	}
 	app.Commands = []*cli.Command{
 		///Block(commands)
+		NewTokenCmd(log),
 		///EndBlock(commands)
 	}
 
