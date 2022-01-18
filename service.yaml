@@ -2,8 +2,20 @@ name: ci
 reportingTeam: fnd-dtss
 description: Collection of utilities for use in CI @ Outreach
 slack: dev-tooling-support
+library: true
 commands:
   - ghaccesstoken
 lintroller: platinum
 releaseType: ""
-library: true
+deployTo:
+  environments: []
+arguments:
+  dependencies:
+    optional: []
+    required: []
+  description: Collection of utilities for use in CI @ Outreach
+  reportingTeam: fnd-dtss
+  type: []
+modules:
+  - url: https://github.com/getoutreach/stencil-base
+    version: ""
