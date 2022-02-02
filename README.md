@@ -67,5 +67,7 @@ Done!
 ### Dependencies
 
 <!--- Block(dependencies) -->
-{[] []}
+## License
+
+Apache-2.0
 <!--- EndBlock(dependencies) -->
