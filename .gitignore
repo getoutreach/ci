@@ -56,8 +56,11 @@ Pulumi.*.yaml
 /cache-version.txt
 
 # DevSpace files
-/.devspace # temp dir
+/.devspace
 /deployments/ci.yaml
+
+# Documentation output
+/apidocs
 
 ###Block(extras)
 ###EndBlock(extras)
