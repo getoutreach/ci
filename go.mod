@@ -35,6 +35,7 @@ require (
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/prometheus/client_golang v1.11.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
+	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.6.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
@@ -44,6 +45,7 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f // indirect
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
@@ -51,9 +53,4 @@ require (
 	gopkg.in/alexcesaro/statsd.v2 v2.0.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-)
-
-require (
-	github.com/prometheus/common v0.32.1 // indirect
-	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f // indirect
 )
