@@ -5,17 +5,41 @@ slack: dev-tooling-support
 library: true
 commands:
   - ghaccesstoken
+circleAPIKey: ""
 lintroller: platinum
 releaseType: ""
 deployTo:
   environments: []
 arguments:
+  circleAPIKey: ""
+  commands:
+    - ghaccesstoken
   dependencies:
     optional: []
     required: []
   description: Collection of utilities for use in CI @ Outreach
+  grpcClients: []
+  opslevel:
+    confluenceSpaceKey: ""
+    datadogDashboards:
+      mainLink: ""
+    designDocumentLink: ""
+  oss: false
+  releaseOptions:
+    allowMajorVersions: null
+    allowPrereleases: false
   reportingTeam: fnd-dtss
-  type: []
+  type:
+    - library
 modules:
-  - url: https://github.com/getoutreach/stencil-base
+  - name: github.com/getoutreach/stencil-base
     version: ""
+opsLevel:
+  serviceTier: 0
+  lifecycle: ""
+  confluenceSpaceKey: ""
+  pagerDutyLink: ""
+  datadogDashboards:
+    mainLink: ""
+    custom: []
+  designDocumentLink: ""
