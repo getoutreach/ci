@@ -27,13 +27,12 @@ arguments:
   oss: false
   releaseOptions:
     allowMajorVersions: null
-    allowPrereleases: false
+    enablePrereleases: false
   reportingTeam: fnd-dtss
   type:
     - library
 modules:
   - name: github.com/getoutreach/stencil-base
-    version: ""
 opsLevel:
   serviceTier: 0
   lifecycle: ""
