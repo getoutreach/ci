@@ -4,11 +4,11 @@ go 1.17
 
 require (
 	github.com/bradleyfalzon/ghinstallation v1.1.1
-	github.com/getoutreach/gobox v1.38.0
+	github.com/getoutreach/gobox v1.41.5
 	github.com/google/go-github/v34 v34.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.8.1
-	github.com/urfave/cli/v2 v2.4.0
+	github.com/urfave/cli/v2 v2.6.0
 )
 
 require (
