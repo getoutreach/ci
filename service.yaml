@@ -7,6 +7,8 @@ commands:
   - ghaccesstoken
 circleAPIKey: ""
 lintroller: platinum
+tracing: honeycomb
+metrics: datadog
 releaseType: ""
 deployTo:
   environments: []
@@ -14,6 +16,7 @@ arguments:
   circleAPIKey: ""
   commands:
     - ghaccesstoken
+  commitGuard: false
   dependencies:
     optional: []
     required: []
@@ -22,6 +25,7 @@ arguments:
   kubernetes:
     groups: []
   lintroller: platinum
+  metrics: datadog
   opslevel:
     confluenceSpaceKey: ""
     datadogDashboards:
@@ -32,7 +36,9 @@ arguments:
     allowMajorVersions: null
     enablePrereleases: false
   reportingTeam: fnd-dtss
+  resources: {}
   service: false
+  tracing: honeycomb
   tutorial: false
   vaultSecrets:
     - deploy/honeycomb_new/%(environment)s/honeycomb
@@ -40,9 +46,12 @@ arguments:
     - deploy/mint/%(environment)s/validation/mint-validator-payload
     - deploy/flagship-shared-secret/%(environment)s/authn-flagship-payload
 modules:
+  - name: github.com/getoutreach/stencil-actions
   - name: github.com/getoutreach/stencil-base
   - name: github.com/getoutreach/stencil-golang
   - name: github.com/getoutreach/stencil-opslevel
+  - name: github.com/getoutreach/stencil-outreach
+  - name: github.com/getoutreach/stencil-circleci
 opsLevel:
   serviceTier: 0
   lifecycle: ""
