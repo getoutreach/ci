@@ -14,8 +14,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 	// Place any extra imports for your startup code here
-	///Block(imports)
-	///EndBlock(imports)
+	// <<Stencil::Block(imports)>>
+	// <</Stencil::Block>>
 )
 
 // HoneycombTracingKey gets set by the Makefile at compile-time which is pulled
@@ -26,46 +26,46 @@ var HoneycombTracingKey = "NOTSET" //nolint:gochecknoglobals // Why: We can't co
 // down by devconfig.sh.
 var TeleforkAPIKey = "NOTSET" //nolint:gochecknoglobals // Why: We can't compile in things as a const.
 
-///Block(honeycombDataset)
+// <<Stencil::Block(honeycombDataset)>>
 
 // HoneycombDataset is the HoneycombDataset to use when tracing
 const HoneycombDataset = ""
 
-///EndBlock(honeycombDataset)
+// <</Stencil::Block>>
 
-///Block(global)
+// <<Stencil::Block(global)>>
 
-///EndBlock(global)
+// <</Stencil::Block>>
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	log := logrus.New()
 
-	///Block(init)
+	// <<Stencil::Block(init)>>
 
-	///EndBlock(init)
+	// <</Stencil::Block>>
 
 	app := cli.App{
 		Version: oapp.Version,
 		Name:    "ghaccesstoken",
-		///Block(app)
+		// <<Stencil::Block(app)>>
 
-		///EndBlock(app)
+		// <</Stencil::Block>>
 	}
 	app.Flags = []cli.Flag{
-		///Block(flags)
+		// <<Stencil::Block(flags)>>
 
-		///EndBlock(flags)
+		// <</Stencil::Block>>
 	}
 	app.Commands = []*cli.Command{
-		///Block(commands)
+		// <<Stencil::Block(commands)>>
 		NewTokenCmd(log),
-		///EndBlock(commands)
+		// <</Stencil::Block>>
 	}
 
-	///Block(postApp)
+	// <<Stencil::Block(postApp)>>
 
-	///EndBlock(postApp)
+	// <</Stencil::Block>>
 
 	// Insert global flags, tracing, updating and start the application.
 	gcli.HookInUrfaveCLI(ctx, cancel, &app, log, HoneycombTracingKey, HoneycombDataset, TeleforkAPIKey)
