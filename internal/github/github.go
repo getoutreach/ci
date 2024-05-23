@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	"time"
 
 	"github.com/bradleyfalzon/ghinstallation"
 	"github.com/getoutreach/gobox/pkg/cfg"
@@ -18,11 +17,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
-
-// init seeds the random generator
-func init() { //nolint:gochecknoinits // Why: seeding random
-	rand.Seed(time.Now().UnixNano())
-}
 
 // Credential is a type of credential to use when talking to Github
 type Credential struct {
