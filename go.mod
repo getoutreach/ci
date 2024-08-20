@@ -1,6 +1,8 @@
 module github.com/getoutreach/ci
 
-go 1.21
+go 1.22
+
+toolchain go1.22.6
 
 require (
 	github.com/bradleyfalzon/ghinstallation v1.1.1
