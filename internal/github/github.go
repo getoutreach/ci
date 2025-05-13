@@ -11,9 +11,9 @@ import (
 	"math/rand"
 	"net/http"
 
-	"github.com/bradleyfalzon/ghinstallation"
+	"github.com/bradleyfalzon/ghinstallation/v2"
 	"github.com/getoutreach/gobox/pkg/cfg"
-	gc "github.com/google/go-github/v34/github"
+	gc "github.com/google/go-github/v71/github"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -78,7 +78,7 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 		Transport: &staticTokenTransport{token: t},
 	})
 
-	rl, _, err := cli.RateLimits(ctx)
+	rl, _, err := cli.RateLimit.Get(ctx)
 	if err != nil {
 		return "", err
 	}
