@@ -11,9 +11,9 @@ import (
 	"math/rand"
 	"net/http"
 
-	"github.com/bradleyfalzon/ghinstallation"
+	"github.com/bradleyfalzon/ghinstallation/v2"
 	"github.com/getoutreach/gobox/pkg/cfg"
-	gc "github.com/google/go-github/v34/github"
+	gc "github.com/google/go-github/v71/github"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
