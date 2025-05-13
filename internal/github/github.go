@@ -78,7 +78,7 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 		Transport: &staticTokenTransport{token: t},
 	})
 
-	rl, _, err := cli.RateLimits(ctx)
+	rl, _, err := cli.RateLimit.Get(ctx)
 	if err != nil {
 		return "", err
 	}
