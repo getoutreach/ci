@@ -13,7 +13,7 @@ import (
 
 	"github.com/bradleyfalzon/ghinstallation/v2"
 	"github.com/getoutreach/gobox/pkg/cfg"
-	gc "github.com/google/go-github/v71/github"
+	gc "github.com/google/go-github/v72/github"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
