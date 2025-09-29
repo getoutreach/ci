@@ -1,11 +1,9 @@
 module github.com/getoutreach/ci
 
-go 1.23.0
-
-toolchain go1.23.4
+go 1.24.0
 
 require (
-	github.com/bradleyfalzon/ghinstallation/v2 v2.16.0
+	github.com/bradleyfalzon/ghinstallation/v2 v2.17.0
 	github.com/getoutreach/gobox v1.107.1
 	github.com/google/go-github/v72 v72.0.0
 	github.com/pkg/errors v0.9.1
@@ -64,6 +62,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/google/go-github/v71 v71.0.0 // indirect
+	github.com/google/go-github/v75 v75.0.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3 // indirect
