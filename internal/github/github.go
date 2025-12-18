@@ -9,6 +9,7 @@ import (
 	"context"
 	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/bradleyfalzon/ghinstallation/v2"
 	"github.com/getoutreach/gobox/pkg/cfg"
@@ -24,7 +25,7 @@ type RateLimitError struct {
 
 // Error implements the `error` interface.
 func (r RateLimitError) Error() string {
-	return "token close to be, or is, rate limited"
+	return "token is rate limited or close to it"
 }
 
 // Credential is a type of credential to use when talking to Github
@@ -104,6 +105,11 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 	// doesn't always work for Github Apps
 	_, _, err = cli.Organizations.Get(ctx, "getoutreach")
 	if err != nil {
+		// If the GitHub client reports a rate limit error, wrap it with our type so callers can log metadata
+		var ghRLE *gc.RateLimitError
+		if errors.As(err, &ghRLE) {
+			return "", RateLimitError{Rate: &ghRLE.Rate}
+		}
 		return "", errors.Wrap(err, "failed to test token")
 	}
 
@@ -122,7 +128,12 @@ func GetToken(ctx context.Context, creds []*Credential, logger logrus.FieldLogge
 		if err != nil {
 			var rlErr RateLimitError
 			if errors.As(err, &rlErr) {
-				log = log.WithField("ratelimit", rlErr.Rate)
+				log = log.WithFields(logrus.Fields{
+					"ratelimit.max_requests_per_hour": rlErr.Rate.Limit,
+					"ratelimit.remaining_requests":    rlErr.Rate.Remaining,
+					"ratelimit.reset":                 rlErr.Rate.Reset.Time,
+					"ratelimit.time_until_reset":      time.Until(rlErr.Rate.Reset.Time).String(),
+				})
 			}
 			log.WithError(err).Warn("failed to use credential")
 			continue
