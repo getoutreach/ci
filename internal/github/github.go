@@ -7,9 +7,9 @@ package github
 
 import (
 	"context"
-	"fmt"
 	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/bradleyfalzon/ghinstallation/v2"
 	"github.com/getoutreach/gobox/pkg/cfg"
@@ -17,6 +17,16 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
+
+// RateLimitError is an `error` which also provides rate limit metadata.
+type RateLimitError struct {
+	Rate *gc.Rate
+}
+
+// Error implements the `error` interface.
+func (r RateLimitError) Error() string {
+	return "token is rate limited or close to it"
+}
 
 // Credential is a type of credential to use when talking to Github
 type Credential struct {
@@ -50,17 +60,17 @@ func (c *Credential) getToken(ctx context.Context) (cfg.SecretData, error) {
 
 	atsp, err := ghinstallation.NewAppsTransport(http.DefaultTransport, int64(*c.AppID), []byte(string(c.PEM)))
 	if err != nil {
-		return "", errors.Wrap(err, "failed to create github app client transport")
+		return "", errors.Wrap(err, "failed to create GitHub app client transport")
 	}
 
 	// Create a Token for use as our Github App
 	token, _, err := gc.NewClient(&http.Client{Transport: atsp}).
 		Apps.CreateInstallationToken(ctx, int64(*c.InstallID), &gc.InstallationTokenOptions{})
 	if err != nil {
-		return "", errors.Wrap(err, "failed to create access token from Github App")
+		return "", errors.Wrap(err, "failed to create access token from GitHub App")
 	}
 	if token == nil {
-		return "", fmt.Errorf("malformed response from Github")
+		return "", errors.New("malformed response from GitHub")
 	}
 
 	return cfg.SecretData(*token.Token), nil
@@ -84,17 +94,22 @@ func (c *Credential) GetToken(ctx context.Context) (cfg.SecretData, error) {
 	}
 
 	if rl.Core == nil {
-		return "", fmt.Errorf("failed to calculate rate limit")
+		return "", errors.New("failed to calculate rate limit")
 	}
 
 	if rl.Core.Remaining < 10 {
-		return "", fmt.Errorf("token close to be, or is, rate limited")
+		return "", RateLimitError{Rate: rl.Core}
 	}
 
 	// Now use the token against a known working endpoint because /rate_limits
 	// doesn't always work for Github Apps
 	_, _, err = cli.Organizations.Get(ctx, "getoutreach")
 	if err != nil {
+		// If the GitHub client reports a rate limit error, wrap it with our type so callers can log metadata
+		var ghRLE *gc.RateLimitError
+		if errors.As(err, &ghRLE) {
+			return "", RateLimitError{Rate: &ghRLE.Rate}
+		}
 		return "", errors.Wrap(err, "failed to test token")
 	}
 
@@ -111,6 +126,15 @@ func GetToken(ctx context.Context, creds []*Credential, logger logrus.FieldLogge
 
 		t, err := c.GetToken(ctx)
 		if err != nil {
+			var rlErr RateLimitError
+			if errors.As(err, &rlErr) {
+				log = log.WithFields(logrus.Fields{
+					"ratelimit.max_requests_per_hour": rlErr.Rate.Limit,
+					"ratelimit.remaining_requests":    rlErr.Rate.Remaining,
+					"ratelimit.reset":                 rlErr.Rate.Reset.Time,
+					"ratelimit.time_until_reset":      time.Until(rlErr.Rate.Reset.Time).String(),
+				})
+			}
 			log.WithError(err).Warn("failed to use credential")
 			continue
 		}
@@ -119,5 +143,5 @@ func GetToken(ctx context.Context, creds []*Credential, logger logrus.FieldLogge
 		return t, err
 	}
 
-	return "", fmt.Errorf("failed to find non-ratelimited token")
+	return "", errors.New("failed to find non-ratelimited token")
 }
