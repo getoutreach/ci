@@ -1,4 +1,4 @@
-// Copyright 2025 Outreach Corporation. All Rights Reserved.
+// Copyright 2026 Outreach Corporation. All Rights Reserved.
 
 // Description: This file is the entrypoint for the ghaccesstoken CLI
 // command for ci.
