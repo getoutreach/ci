@@ -7,7 +7,7 @@ toolchain go1.25.7
 require (
 	github.com/bradleyfalzon/ghinstallation/v2 v2.18.0
 	github.com/getoutreach/gobox v1.111.2
-	github.com/google/go-github/v75 v75.0.0
+	github.com/google/go-github/v84 v84.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.4
 	github.com/urfave/cli/v2 v2.27.7
@@ -66,7 +66,6 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/google/go-github/v71 v71.0.0 // indirect
-	github.com/google/go-github/v84 v84.0.0 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.7 // indirect
