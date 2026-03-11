@@ -20,7 +20,7 @@ import (
 	"github.com/getoutreach/gobox/pkg/cfg"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // filterPrefix iterates over a set of strings and returns only
@@ -43,13 +43,13 @@ func NewTokenCmd(log logrus.FieldLogger) *cli.Command {
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "env-prefix",
-				EnvVars: []string{"GHACCESSTOKEN_ENV_PREFIX"},
+				Sources: cli.EnvVars("GHACCESSTOKEN_ENV_PREFIX"),
 				Usage:   "Prefix to use when looking for credentials. Environment variable format is: appID,installID,AccessToken_OR_PEM",
 				Value:   "GHACCESSTOKEN_GHAPP",
 			},
 		},
-		Action: func(c *cli.Context) error {
-			envPrefix := c.String("env-prefix")
+		Action: func(_ context.Context, cmd *cli.Command) error {
+			envPrefix := cmd.String("env-prefix")
 			creds := make([]*github.Credential, 0)
 
 			envVars := filterPrefix(envPrefix, os.Environ())
