@@ -9,7 +9,7 @@ require (
 	github.com/getoutreach/gobox v1.111.2
 	github.com/google/go-github/v84 v84.0.0
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.9.4
+	github.com/sirupsen/logrus v1.10.1
 	github.com/urfave/cli/v3 v3.7.0
 )
 
